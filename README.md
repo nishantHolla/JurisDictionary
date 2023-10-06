@@ -1,0 +1,2 @@
+# JurisDictionary
+GenAI project
