@@ -1,20 +1,24 @@
 # JurisDictionary
-GenAI project
+GenAI project for [pesuIO](https://pesu.io/courses/) slot 16 2023.
 
 # Usage
 
-- First clone this repo.<br>
-```git clone https://github.com/nishantHolla/JurisDictionary.git```
+- First clone this repo.
+```
+git clone https://github.com/nishantHolla/JurisDictionary.git
+```
 
-- Create python environment<br>
-```python -m venv env```
+- Create python environment
+```
+python -m venv env
+```
 
-- Install python dependencies<br>
+- Install python dependencies
 ```
 pip install -r /path/to/requirements.txt
 ```
 
-- Run the app<br>
+- Run the app
 ```
 streamlit run ./app.py
 ```
