@@ -1,7 +1,7 @@
 # JurisDictionary
 GenAI project for [pesuIO](https://pesu.io/courses/) slot 16 2023.
 
-# Usage
+## Usage
 
 - First clone this repo.
 ```
@@ -24,3 +24,6 @@ streamlit run ./app.py
 ```
 
 - If you don't want to see the frontend, you can find the google colab for this [here](https://colab.research.google.com/drive/1hNjW3DRTgbUWr_vkbIDbdkaKzhnmMA9c?usp=sharing)
+
+## Screenshot
+<img src="./screenshots/07_10_2023_08_25_21.png" alt="screenshot">
