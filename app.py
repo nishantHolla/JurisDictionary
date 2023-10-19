@@ -1,7 +1,12 @@
 import openai
+import sys
 import os
 
-KEY = "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"
+if len(sys.argv) < 2:
+    print("Usage: [PROGRAM_NAME] [openai_api_key]")
+    exit(1)
+
+KEY = sys.argv[1]
 os.environ["OPENAI_AI_KEY"] = KEY
 openai.api_key = KEY
 from langchain.embeddings import OpenAIEmbeddings
