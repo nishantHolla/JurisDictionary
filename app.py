@@ -1,32 +1,38 @@
-import openai
 import sys
 import os
 
-if len(sys.argv) < 2:
-    print("Usage: [PROGRAM_NAME] [openai_api_key]")
-    exit(1)
-
-KEY = sys.argv[1]
-os.environ["OPENAI_AI_KEY"] = KEY
-openai.api_key = KEY
+import openai
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import SystemMessagePromptTemplate
 from langchain.memory import StreamlitChatMessageHistory
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import FAISS
+from langchain.memory import ConversationBufferMemory
+from langchain.memory.chat_message_histories import StreamlitChatMessageHistory
+from langchain.prompts import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+)
+
+import streamlit as st
+from streamlit_chat import message
+
+if len(sys.argv) < 2:
+    print("Usage: [PROGRAM_NAME] [openai_api_key]")
+    sys.exit(1)
+
+KEY = sys.argv[1]
+os.environ["OPENAI_AI_KEY"] = KEY
+openai.api_key = KEY
 
 history = StreamlitChatMessageHistory(key="chat_messages")
-
-from langchain.document_loaders import PyPDFLoader
-
 loader = PyPDFLoader("./legalguide.pdf")
 pages = loader.load_and_split()
-
-from langchain.text_splitter import CharacterTextSplitter
-
 text_splitter = CharacterTextSplitter(chunk_size=800, chunk_overlap=50)
 documents = text_splitter.split_documents(pages)
-
 embeddings = OpenAIEmbeddings(openai_api_key=KEY)
 llm = ChatOpenAI(
     temperature=0,
@@ -34,12 +40,8 @@ llm = ChatOpenAI(
     openai_api_key=KEY,
 )
 
-from langchain.vectorstores import FAISS
 
 db = FAISS.from_documents(documents, embeddings)
-
-from langchain.memory import ConversationBufferMemory
-from langchain.memory.chat_message_histories import StreamlitChatMessageHistory
 
 memory = ConversationBufferMemory(
     llm=llm, output_key="answer", memory_key="chat_history", return_messages=True
@@ -73,10 +75,6 @@ Question: \n {question}?\n
 Answer:
 
 """
-from langchain.prompts import (
-    ChatPromptTemplate,
-    SystemMessagePromptTemplate,
-)
 
 message = [
     SystemMessagePromptTemplate.from_template(prompt_template),
@@ -95,9 +93,6 @@ chain = ConversationalRetrievalChain.from_llm(
 )
 
 chat_history = []
-
-import streamlit as st
-from streamlit_chat import message
 
 st.set_page_config(
     page_title="JurisDictionary",
