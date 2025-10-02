@@ -29,7 +29,7 @@ os.environ["OPENAI_AI_KEY"] = KEY
 openai.api_key = KEY
 
 history = StreamlitChatMessageHistory(key="chat_messages")
-loader = PyPDFLoader("./legalguide.pdf")
+loader = PyPDFLoader("./dataset/legalguide.pdf")
 pages = loader.load_and_split()
 text_splitter = CharacterTextSplitter(chunk_size=800, chunk_overlap=50)
 documents = text_splitter.split_documents(pages)
